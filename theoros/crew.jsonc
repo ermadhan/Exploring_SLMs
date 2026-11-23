@@ -13,10 +13,10 @@
 
       // What the task should accomplish
       // Use {placeholder} inputs here; crewai run prompts for missing values
-      "description": "Answer the given query, \"{query}\", using an article retrieved from",
+      "description": "Use the available Wikipedia search tool to retrieve relevant information, then answer the movie-related query: \"{query}\"",
 
       // Clear definition of what the output should look like
-      "expected_output": "Wikipedia.",
+      "expected_output": "A concise, factual answer to the query based on the retrieved Wikipedia article, with uncertainty stated when the evidence is incomplete.",
 
       // Optional task guardrail(s) validate output before completion
       // Use "guardrail" for one rule or "guardrails" for many

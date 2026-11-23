@@ -21,9 +21,11 @@
       "inputs": {
         "query": "best movies in 2026"
       },
-      "expected_output": "Wikipedia.",
+      "expected_output": "A concise, factual answer to the query based on the retrieved Wikipedia article, with uncertainty stated when the evidence is incomplete.",
       "criteria": [
-        "The final output satisfies the task's expected output: Wikipedia."
+        "The final output directly answers the query.",
+        "The final output is supported by information retrieved from Wikipedia.",
+        "Any uncertainty or missing evidence is stated clearly."
       ]
     }
   ]
