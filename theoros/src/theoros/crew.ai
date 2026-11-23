@@ -1,0 +1,55 @@
+import wikipedia
+from crewai import Agent, Crew, Process, Task
+from crewai.project import CrewBase, agent, crew, task
+from crewai.agents.agent_builder.base_agent import BaseAgent
+from crewai.tools import BaseTool
+
+@CrewBase
+class Theoros:
+    """Theoros crew"""
+
+    agents: list[BaseAgent]
+    tasks: list[Task]
+
+    @agent
+    def movie_expert(self) -> Agent:
+        return Agent(
+            config=self.agents_config['movie_expert'], # type: ignore[index]
+            verbose=True
+        )
+
+class WikipediaSearchTool(BaseTool):
+        name: str = "WikipediaSearchTool"
+        description: str = "Search for the article most relevant to the query"
+
+    def _run(self, query: str) -> str:
+        print(f"\nWikipediaSearchTool used for query: {query}")
+        titles = wikipedia.search(query, results=1)
+        for title in titles:
+            if title.startswith("List of"):
+                title += " - Wikipedia"
+            try:
+                page = wikipedia.page(title=title)
+                return page.summary
+            except PageError as e:
+                print(e, file=sys.stderr)
+                pass
+        return "No article found"
+
+    @task
+    def movie_qa_w_context(self) -> Task:
+        return Task(
+            config=self.tasks_config['movie_qa_w_context'],
+            tools=[self.WikipediaSearchTool()],
+        )
+
+    @crew
+    def crew(self) -> Crew:
+        """Creates the Theoros crew"""
+
+        return Crew(
+            agents=self.agents,
+            tasks=self.tasks,
+            process=Process.sequential,
+            verbose=True,
+        )
