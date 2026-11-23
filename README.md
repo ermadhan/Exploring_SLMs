@@ -66,4 +66,13 @@ Project to explore difference SLMs for learning purpose
 -Run the Jupyter server
     jupyter lab --no-browser
 
+-MovieExpert is with CrewAI. Install CrewAI libraries with pip
+    -`pip install crewai crewai-toolsv`
+    -crewai create crew movieexpert
+    -create .env file with below entries
+        MODEL=ollama/deepseek-r1:8b
+        API_BASE=http://localhost:11434
+    
+
+
 
